@@ -1,0 +1,5 @@
+name: LDbase Citations 
+description: Citation functionality for LDbase.
+package: LDbase
+type: module
+core: 8.x
