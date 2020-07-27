@@ -21,8 +21,8 @@
       "email": "fcalvo@fsu.edu",
       "role": "Maintainer"
     }
-  ]
+  ],
   "require": {
-    "seboettg/citeproc-php": "2.1.6",
-  },
+    "seboettg/citeproc-php": "2.1.6"
+  }
 }
