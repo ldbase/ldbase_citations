@@ -1,0 +1,7 @@
+services:
+  logger.channel.ldbase_citations:
+    parent: logger.channel_base
+    arguments: ['ldbase_citations']
+  ldbase_citations.render:
+    class: Drupal\ldbase_citations\LDbaseCitationsService
+    arguments: []
