@@ -12,5 +12,7 @@ interface LDbaseCitationsServiceInterface {
   public function renderCitationMetadataForDataset($nid);
   public function renderCitationMetadataForCode($nid);
   public function renderCitationMetadataForDocument($nid);
+  public function getNodeFieldValue($nid, $fieldname);
+  public function getNodeAuthors($nid, $fieldname);
 
 }
