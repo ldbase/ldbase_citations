@@ -19,108 +19,44 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
 
   public function renderCitationForNode($nid) {
     $node = Node::load($nid);
-    $ctype = $node->bundle();
-
-    switch ($ctype) {
-      case 'project':
-        $metadata = \Drupal::service('ldbase_citations.render')->renderCitationMetadataForProject($node->id());
-        break;
-      case 'dataset':
-        $metadata = \Drupal::service('ldbase_citations.render')->renderCitationMetadataForDataset($node->id());
-        break;
-      case 'code':
-        $metadata = \Drupal::service('ldbase_citations.render')->renderCitationMetadataForCode($node->id());
-        break;
-      case 'document':
-        $metadata = \Drupal::service('ldbase_citations.render')->renderCitationMetadataForDocument($node->id());
-        break;
+    $title = $node->getTitle();
+    $doi = \Drupal::service('ldbase_citations.render')->getNodeFieldValue($nid, 'field_doi');
+    if ($doi) {
+      $url = "https://doi.org/{$doi}";
+    } 
+    else {
+      global $base_url;
+      $path = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()])->toString();
+      $url = "{$base_url}{$path}";
     }
+    $authors = \Drupal::service('ldbase_citations.render')->getNodeAuthors($nid, 'field_related_persons');
+    $year = \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'html_year');
+    $current_day = date('d', time());
+    $current_month = date('m', time());
+    $current_year = date('Y', time());
+
+    $metadata = array(
+      array(
+        "title" => $title, 
+        "author" => $authors,
+        "archive" => "LDbase",
+        "accessed" => array(
+          "date-parts" => array(array($current_year, $current_month, $current_day)),
+        ),
+        "retrieved" => "2020-03-01",
+        "URL" => $url,
+        "issued" => array(
+          "date-parts" => array(array($year)),
+        ),
+        "type" => 'codebook',
+      )
+    );
 
     $style = StyleSheet::loadStyleSheet("apa");
     $citeproc = new CiteProc($style);
-    $citation = $citeproc->render(json_decode($metadata), "bibliography");
+    $citation = $citeproc->render(json_decode(json_encode($metadata)), "bibliography");
 
     return $citation;
-  }
-
-  public function renderCitationMetadataForProject($nid) {
-    $node = Node::load($nid);
-    $title = $node->getTitle();
-    $doi = \Drupal::service('ldbase_citations.render')->getNodeFieldValue($nid, 'field_doi');
-    //$year = $node->field_activity_range_select[0]->entity->field_from_year->value;
-    $authors = \Drupal::service('ldbase_citations.render')->getNodeAuthors($nid, 'field_related_persons');
-
-    $metadata = array(
-      array(
-        "title" => $title, 
-        "author" => $authors,
-        "DOI" => $doi,
-        "archive" => "LDbase",
-        /*
-        "issued" => array(
-          "date-parts" => array(array($year)),
-        )
-        */
-      )
-    );
-    return json_encode($metadata);
-  }
-
-  public function renderCitationMetadataForDataset($nid) {
-    $node = Node::load($nid);
-    $title = $node->getTitle();
-    $doi = \Drupal::service('ldbase_citations.render')->getNodeFieldValue($nid, 'field_doi');
-    //$year = $node->field_data_collection_range[0]->entity->field_from_year->value;
-    $authors = \Drupal::service('ldbase_citations.render')->getNodeAuthors($nid, 'field_related_persons');
-
-    $metadata = array(
-      array(
-        "title" => $title, 
-        "author" => $authors,
-        "DOI" => $doi,
-        "archive" => "LDbase",
-        /*
-        "issued" => array(
-          "date-parts" => array(array($year)),
-        )
-        */
-      )
-    );
-    return json_encode($metadata);
-  }
-
-  public function renderCitationMetadataForCode($nid) {
-    $node = Node::load($nid);
-    $title = $node->getTitle();
-    $doi = \Drupal::service('ldbase_citations.render')->getNodeFieldValue($nid, 'field_doi');
-    $authors = \Drupal::service('ldbase_citations.render')->getNodeAuthors($nid, 'field_related_persons');
-
-    $metadata = array(
-      array(
-        "title" => $title, 
-        "author" => $authors,
-        "DOI" => $doi,
-        "archive" => "LDbase",
-      )
-    );
-    return json_encode($metadata);
-  }
-
-  public function renderCitationMetadataForDocument($nid) {
-    $node = Node::load($nid);
-    $title = $node->getTitle();
-    $doi = \Drupal::service('ldbase_citations.render')->getNodeFieldValue($nid, 'field_doi');
-    $authors = \Drupal::service('ldbase_citations.render')->getNodeAuthors($nid, 'field_related_persons');
-
-    $metadata = array(
-      array(
-        "title" => $title, 
-        "author" => $authors,
-        "DOI" => $doi,
-        "archive" => "LDbase",
-      )
-    );
-    return json_encode($metadata);
   }
 
   public function getNodeFieldValue($nid, $fieldname) {
