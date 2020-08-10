@@ -1,0 +1,6 @@
+ldbase_citations:
+  version: 1.x
+  js:
+    js/ldbase_citations.js: {}
+  dependencies:
+    - core/jquery
