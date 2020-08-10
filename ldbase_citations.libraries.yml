@@ -1,5 +1,8 @@
 ldbase_citations:
   version: 1.x
+  css:
+    base:
+      css/ldbase-citations-base.css: {}
   js:
     js/ldbase_citations.js: {}
   dependencies:
