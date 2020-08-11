@@ -7,3 +7,4 @@ ldbase_citations:
     js/ldbase_citations.js: {}
   dependencies:
     - core/jquery
+    - core/jquery.once
