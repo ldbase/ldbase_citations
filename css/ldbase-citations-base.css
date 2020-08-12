@@ -16,29 +16,36 @@ div.block-ldbase-citation-display-block {
 div.block-ldbase-citation-display-block div.content {
   background-color: rgba(245,245,245,1);
   margin: 25% auto; /* 15% from the top and centered */
-  padding: 20px;
+  padding: 20px 20px 20px 60px;
   border: 1px solid #888;
   width: 80%;
-  text-align: center;
+  text-indent: -20px;
+  color: black;
+  font-weight: 500;
 }
 
 /* The Close Button */
 .modal-close {
-  color: black;
+  color: white;
   float: right;
   font-size: 28px;
   font-weight: bold;
-  padding-right: 0;
+  padding: 0 10px;
   z-index: 500;
   position: relative;
   top: 0;
   right: 0;
-  margin-top: -20px;
+  margin-top: -45px;
+  margin-right: -35px;
+  background-color: #671e30;
+  border-radius: 20px;
+  text-align: center;
+  text-indent: 0;
 }
 
 .modal-close:hover,
 .modal-close:focus {
-  color: #333;
+  color: #aaa;
   text-decoration: none;
   cursor: pointer;
 }

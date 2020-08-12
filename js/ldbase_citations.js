@@ -2,7 +2,7 @@
   Drupal.behaviors.ldbaseCitationAddLinkBehavior = {
     attach: function (context, settings) {
       $(context).find('div.block-ldbase-citation-display-block > div.content').once('add-paragraph')
-        .prepend('<span class="modal-close">Close X</span>');
+        .prepend('<span class="modal-close">X</span>');
     }
   };
 }) (jQuery);
@@ -14,6 +14,7 @@
         $(context).find('.block-ldbase-citation-display-block').css("display","none");
         $(context).find('.sidebar-first').css("display","block");
         $(context).find('.header-container').css("z-index","499");
+        $(context).find('#subfooter').css("position","relative");
       });
     }
   };
@@ -32,6 +33,9 @@ var sidebar = sidebar_list[0];
 var header_list = document.getElementsByClassName("header-container");
 var header = header_list[0];
 
+// Get the subfooter
+var subfooter = document.getElementById("subfooter");
+
 // Get the button that opens the modal
 var btn = document.getElementById("open-citation-modal");
 
@@ -40,4 +44,5 @@ btn.onclick = function() {
   modal.style.display = "block";
   sidebar.style.display = "none";
   header.style.zIndex = "0";
+  subfooter.style.position = "fixed";
 }
