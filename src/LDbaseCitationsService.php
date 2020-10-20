@@ -43,7 +43,7 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
         "accessed" => array(
           "date-parts" => array(array($current_year, $current_month, $current_day)),
         ),
-        "retrieved" => "2020-03-01",
+        "retrieved" => "{$current_year}-{$current_month}-{$current_day}",
         "URL" => $url,
         "issued" => array(
           "date-parts" => array(array($year)),
