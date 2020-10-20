@@ -72,7 +72,7 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
     foreach ($authors_raw as $author) {
       $author_nid = $author['target_id'];
       $author_node = Node::load($author_nid);
-      $author_name = $author_node->getTitle();
+      $author_name = trim($author_node->getTitle());
       $author_name_exploded = explode(' ', $author_name);
       $converted_length = count($author_name_exploded) - 1;
       $family = array_slice($author_name_exploded, $converted_length);
