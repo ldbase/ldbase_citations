@@ -40,7 +40,7 @@ class LDbaseCitationLinkBlock extends BlockBase {
       if ($show_button) {
         return array(
           '#theme' => 'ldbase_citation_link',
-          '#link_text' => $this->t('Get APA Citation'),
+          '#link_text' => $this->t('Get Citation'),
         );
       }
       else {
