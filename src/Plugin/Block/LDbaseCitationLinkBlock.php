@@ -24,6 +24,7 @@ class LDbaseCitationLinkBlock extends BlockBase {
     if ($ldbase_object_uuid) {
       $node = \Drupal::service('ldbase.object_service')->getLdbaseObjectFromUuid($ldbase_object_uuid);
       //hide link if content is external rather tan uploaded
+
       if ($node->bundle() === 'dataset' && $node->get('field_dataset_upload_or_external')->value === 'external') {
         $show_button = FALSE;
       }
@@ -47,6 +48,8 @@ class LDbaseCitationLinkBlock extends BlockBase {
         return [];
       }
     }
+    else {
+      return [];
+    }
   }
-
 }
