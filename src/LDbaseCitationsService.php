@@ -23,7 +23,7 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
     $doi = \Drupal::service('ldbase_citations.render')->getNodeFieldValue($nid, 'field_doi');
     if ($doi) {
       $url = "https://doi.org/{$doi}";
-    } 
+    }
     else {
       global $base_url;
       $path = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()])->toString();
@@ -37,7 +37,7 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
 
     $metadata = array(
       array(
-        "title" => $title, 
+        "title" => $title,
         "author" => $authors,
         "archive" => "LDbase",
         "accessed" => array(
@@ -62,7 +62,7 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
   public function getNodeFieldValue($nid, $fieldname) {
     $node = Node::load($nid);
     $value_array = $node->get($fieldname)->getValue();
-    return $value_array[0]['value'];
+    return !empty($value_array) ? $value_array[0]['value'] : NULL;
   }
 
   public function getNodeAuthors($nid, $fieldname) {
@@ -70,16 +70,31 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
     $node = Node::load($nid);
     $authors_raw = $node->get($fieldname)->getValue();
     foreach ($authors_raw as $author) {
+      $family = array();
+      $given = array();
       $author_nid = $author['target_id'];
       $author_node = Node::load($author_nid);
-      $author_name = trim($author_node->getTitle());
-      $author_name_exploded = explode(' ', $author_name);
-      $converted_length = count($author_name_exploded) - 1;
-      $family = array_slice($author_name_exploded, $converted_length);
-      $given = ( $converted_length > 1 ? array(implode(' ', array_slice($author_name_exploded, 0, 2))) : array_slice($author_name_exploded, 0, 1) ); // This is a crime
+      $author_first_name = trim($author_node->field_first_name->value);
+      $author_last_name = trim($author_node->field_last_name->value);
+      // Use Full Name if it exists
+      if (!empty($author_first_name) && !empty($author_last_name)) {
+        $family[] = $author_last_name;
+        $given[] = $author_first_name;
+        if (!empty($author_middle_name = trim($author_node->field_middle_name->value))) {
+          array_push($given, ' '.$author_middle_name);
+        }
+      }
+      else {
+        $author_name = trim($author_node->getTitle());
+        $author_name_exploded = explode(' ', $author_name);
+        $converted_length = count($author_name_exploded) - 1;
+        $family = array_slice($author_name_exploded, $converted_length);
+        $given = ( $converted_length > 1 ? array(implode(' ', array_slice($author_name_exploded, 0, 2))) : array_slice($author_name_exploded, 0, 1) ); // This is a crime
+      }
+
       $authors[] = array('family' => implode('', $family), 'given' => implode('', $given));
     }
-    return $authors; 
+    return $authors;
   }
 }
 
