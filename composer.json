@@ -23,6 +23,6 @@
     }
   ],
   "require": {
-    "seboettg/citeproc-php": "2.2.5"
+    "seboettg/citeproc-php": "2.2.0"
   }
 }
