@@ -1,0 +1,6 @@
+ldbase_citations.get_citation_link:
+  class: Drupal\ldbase_citations\Plugin\Menu\LdbaseCitationLink
+  menu_name: ldbase-tools
+  title: 'Get Citation'
+  url: "internal:#citation"
+  weight: -1

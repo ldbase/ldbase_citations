@@ -14,11 +14,11 @@ div.block-ldbase-citation-display-block {
 
 /* Modal Content */
 div.block-ldbase-citation-display-block div.content {
-  background-color: rgba(245,245,245,1);
-  margin: 25% auto; /* 15% from the top and centered */
+  background-color: white;
+  margin: 20% auto; /* 25% from the top and centered */
   padding: 20px 20px 20px 60px;
   border: 1px solid #888;
-  width: 80%;
+  width: 70%;
   text-indent: -20px;
   color: black;
   font-weight: 500;

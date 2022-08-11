@@ -9,6 +9,7 @@
   if (\Drupal::routeMatch()->getRouteName() === $route) {
     $variables['#attached']['library'][] =  'ldbase_citations/ldbase_citations';
   }
+
 }
 
 /**
