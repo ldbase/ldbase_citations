@@ -2,6 +2,7 @@
 
 namespace Drupal\ldbase_citations\Plugin\Menu;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Menu\MenuLinkDefault;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Menu\StaticMenuLinkOverridesInterface;
@@ -73,13 +74,25 @@ class LdbaseCitationLink extends MenuLinkDefault {
     return 'Get Citation';
   }
 
+  public function getRouteName() {
+    return 'ldbase_citations.display_citation';
+  }
+
+  public function getRouteParameters() {
+    $node = $this->routeMatch->getParameter('node');
+    $ldbase_uuid = $node->uuid();
+
+    return ['node' => $ldbase_uuid];
+  }
+
   /**
    * {@inheritdoc}
    */
   public function getOptions() {
     $options = parent::getOptions();
-    $options['attributes']['id'] = 'open-citation-modal';
-    $options['attributes']['class'] = 'citation-modal-icon';
+    $options['attributes']['class'] = ['use-ajax', 'citation-modal-icon'];
+    $options['attributes']['data-dialog-type'] = 'modal';
+    $options['attributes']['data-dialog-options'] = Json::encode(['width' => '800', 'title' => 'Citation']);
 
     return $options;
   }

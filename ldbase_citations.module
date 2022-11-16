@@ -12,13 +12,3 @@
 
 }
 
-/**
- * Implements HOOK_theme()
- */
- function ldbase_citations_theme() {
-  return [
-    'ldbase_citation_link' => [
-      'variables' => ['link_text' => NULL],
-    ]
-  ];
-}

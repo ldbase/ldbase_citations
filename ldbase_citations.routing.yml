@@ -1,0 +1,11 @@
+ldbase_citations.display_citation:
+  path: '/citation/{node}'
+  defaults:
+    _controller: '\Drupal\ldbase_citations\Controller\CitationController::getCitation'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      node:
+        type:
+          ldbase_uuid
