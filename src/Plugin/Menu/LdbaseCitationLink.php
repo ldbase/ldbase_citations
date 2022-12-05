@@ -80,7 +80,7 @@ class LdbaseCitationLink extends MenuLinkDefault {
 
   public function getRouteParameters() {
     $node = $this->routeMatch->getParameter('node');
-    $ldbase_uuid = $node->uuid();
+    $ldbase_uuid = !(empty($node)) ? $node->uuid() : 'not_a_node';
 
     return ['node' => $ldbase_uuid];
   }
