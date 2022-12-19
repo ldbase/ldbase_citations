@@ -2,5 +2,5 @@ ldbase_citations:
   version: 1.x
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal.dialog.ajax
