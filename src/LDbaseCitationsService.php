@@ -74,13 +74,13 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
       $given = array();
       $author_nid = $author['target_id'];
       $author_node = Node::load($author_nid);
-      $author_first_name = trim($author_node->field_first_name->value);
-      $author_last_name = trim($author_node->field_last_name->value);
+      $author_first_name = trim($author_node->field_first_name->value ?? '');
+      $author_last_name = trim($author_node->field_last_name->value ?? '');
       // Use Full Name if it exists
       if (!empty($author_first_name) && !empty($author_last_name)) {
         $family[] = $author_last_name;
         $given[] = $author_first_name;
-        if (!empty($author_middle_name = trim($author_node->field_middle_name->value))) {
+        if (!empty($author_middle_name = trim($author_node->field_middle_name->value ?? ''))) {
           array_push($given, ' '.$author_middle_name);
         }
       }
