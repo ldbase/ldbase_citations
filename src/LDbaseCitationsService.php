@@ -48,7 +48,7 @@ class LDbaseCitationsService implements LDbaseCitationsServiceInterface {
         "issued" => array(
           "date-parts" => array(array($year)),
         ),
-        "type" => 'codebook',
+        "type" => 'webpage',
       )
     );
 
